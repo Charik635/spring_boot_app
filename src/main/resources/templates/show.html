@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователь</title>
+</head>
+<body>
+<div>
+<a>ID: </a>
+<a th:text ="${user.getId()}">VALUE</a>
+<a>Name: </a>
+<a th:text ="${user.getName()}">VALUE</a>
+<a>Surname: </a>
+<a th:text = "${user.getSurName()}">VALUE</a>
+    <a>Email: </a>
+    <a  th:text  = "${user.getUsername()}">VALUE</a>
+    <a>Age: </a>
+    <a th:text = "${user.getAge()}">VALUE</a>
+    <a>Password: </a>
+    <a th:text="${user.getPassword()}">VALUE</a>
+    <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+        <input type="submit" value="Delete"/>
+    </form>
+</div>
+</br>
+<form action="/logout">
+    <button>Logout</button>
+</form>
+</body>
+</html>
