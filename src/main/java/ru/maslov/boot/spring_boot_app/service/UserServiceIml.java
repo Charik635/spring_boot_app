@@ -1,8 +1,11 @@
 package ru.maslov.boot.spring_boot_app.service;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.maslov.boot.spring_boot_app.DAO.RoleDAO;
 import ru.maslov.boot.spring_boot_app.DAO.UserDAO;
@@ -17,6 +20,8 @@ import java.util.List;
 public class UserServiceIml implements UserService, UserDetailsService {
     private UserDAO usersDAO;
     private RoleDAO roleDAO;
+
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 @Autowired
     public UserServiceIml(UserDAO usersDAO, RoleDAO roleDAO) {
         this.usersDAO = usersDAO;
@@ -32,6 +37,7 @@ public class UserServiceIml implements UserService, UserDetailsService {
         if(user.getUser()){
             user.takeRole(roleDAO.getUserById(2L));
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersDAO.addUser(user);
     }
 

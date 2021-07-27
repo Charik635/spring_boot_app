@@ -3,6 +3,7 @@ package ru.maslov.boot.spring_boot_app.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import javax.persistence.*;
 
 import java.util.Collection;

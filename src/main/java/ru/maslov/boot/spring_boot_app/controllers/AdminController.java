@@ -3,8 +3,6 @@ package ru.maslov.boot.spring_boot_app.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.maslov.boot.spring_boot_app.model.User;
 import ru.maslov.boot.spring_boot_app.service.UserService;
@@ -14,6 +12,8 @@ import ru.maslov.boot.spring_boot_app.service.UserService;
 public class AdminController {
     @Autowired
     private UserService userService;
+
+
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("users", userService.listOfUser());
@@ -53,7 +53,6 @@ public class AdminController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute("user")  User user) {
-
         userService.addUser(user);
         return "redirect:/admin";
     }
