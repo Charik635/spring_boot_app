@@ -12,7 +12,10 @@
     <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getSurName()}">Фамилия</a>
     <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">Email</a>
     <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getAge()}">Возраст</a>
-    <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getPassword()}">Возраст</a>
+    <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.getPassword()}">Пароль</a>
+    <a th:each="role : ${user.getRoles()}">
+        <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${role.getRole()}">Value</a>
+    </a>
     <a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Редактировать</a>
 </div>
     <a th:href="@{/admin/newuser}">Создать нового пользователя</a>

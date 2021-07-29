@@ -43,6 +43,15 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    public User(String name, String surName, int age, String username, Set<Role> roles, String password) {
+        this.name = name;
+        this.surName = surName;
+        this.age = age;
+        this.username = username;
+        this.roles = roles;
+        this.password = password;
+    }
+
     private Boolean isAdmin;
 
     private Boolean isUser;

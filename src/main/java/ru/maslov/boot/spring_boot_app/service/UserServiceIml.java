@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.maslov.boot.spring_boot_app.DAO.RoleDAO;
 import ru.maslov.boot.spring_boot_app.DAO.UserDAO;
@@ -20,8 +19,8 @@ import java.util.List;
 public class UserServiceIml implements UserService, UserDetailsService {
     private UserDAO usersDAO;
     private RoleDAO roleDAO;
-
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+@Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 @Autowired
     public UserServiceIml(UserDAO usersDAO, RoleDAO roleDAO) {
         this.usersDAO = usersDAO;
@@ -43,12 +42,29 @@ public class UserServiceIml implements UserService, UserDetailsService {
 
     @Override
     public void updateUser(int id, User updatedUser) {
-        User userToBeUpdated = getUserById(id);
+        User userToBeUpdated = usersDAO.getUserById(id);
         userToBeUpdated.setName(updatedUser.getName());
         userToBeUpdated.setSurName(updatedUser.getSurName());
         userToBeUpdated.setUsername(updatedUser.getUsername());
         userToBeUpdated.setAge(updatedUser.getAge());
-        userToBeUpdated.setPassword(updatedUser.getPassword());
+        userToBeUpdated.setAdmin(updatedUser.getAdmin());
+        userToBeUpdated.setUser(updatedUser.getUser());
+        if(updatedUser.getPassword().equals(userToBeUpdated.getPassword())){
+            userToBeUpdated.setPassword(userToBeUpdated.getPassword());
+        } else {
+            userToBeUpdated.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
+        if(userToBeUpdated.getAdmin())
+        {
+            userToBeUpdated.takeRole(roleDAO.getUserById(1L));
+        } else {
+            userToBeUpdated.getRoles().remove(roleDAO.getUserById(1L));
+        }
+        if(userToBeUpdated.getUser()){
+            userToBeUpdated.takeRole(roleDAO.getUserById(2L));
+        } else {
+            userToBeUpdated.getRoles().remove(roleDAO.getUserById(2L));
+        }
 
     }
 
@@ -63,6 +79,11 @@ public class UserServiceIml implements UserService, UserDetailsService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return getUserByEmail(email);
+    }
+
+    @Override
     public List<User> listOfUser() {
         return usersDAO.listOfUser();
     }
@@ -72,4 +93,5 @@ public class UserServiceIml implements UserService, UserDetailsService {
         return  usersDAO.getUserByEmail(s);
 
     }
+
 }
