@@ -12,16 +12,17 @@ import ru.maslov.boot.spring_boot_app.service.UserService;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/user")
 public class UsersController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/user")
-    public String UserHome(Model model, Principal principal) {
-        User user = (User) userService.loadUserByUsername(principal.getName());
-        model.addAttribute("user", user);
-        return "homepage";
+    @GetMapping("userInfo")
+    public String showAllUsers(Model model, Principal principal) {
+        User user =(User) userService.loadUserByUsername(principal.getName());
+        model.addAttribute("message", "You are logged in as " + principal.getName());
+        model.addAttribute("userInfo", user);
+        return "user-data";
     }
 
 

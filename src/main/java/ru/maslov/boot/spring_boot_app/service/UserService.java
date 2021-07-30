@@ -1,6 +1,7 @@
 package ru.maslov.boot.spring_boot_app.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
+import ru.maslov.boot.spring_boot_app.model.Role;
 import ru.maslov.boot.spring_boot_app.model.User;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface UserService  extends UserDetailsService {
     User getUserByEmail(String email);
 
     List<User> listOfUser();
+    List<Role> getAllRoles();
+    Role getRoleById(long id);
 }

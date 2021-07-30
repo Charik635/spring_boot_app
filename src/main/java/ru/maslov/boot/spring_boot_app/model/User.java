@@ -52,26 +52,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    private Boolean isAdmin;
 
-    private Boolean isUser;
 
-    public Boolean getAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
-
-    }
-
-    public Boolean getUser() {
-        return isUser;
-    }
-
-    public void setUser(Boolean user) {
-        isUser = user;
-    }
 
     public void takeRole(Role role) {
         roles.add(role);

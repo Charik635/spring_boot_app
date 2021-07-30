@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.maslov.boot.spring_boot_app.DAO.RoleDAO;
 import ru.maslov.boot.spring_boot_app.DAO.UserDAO;
+import ru.maslov.boot.spring_boot_app.model.Role;
 import ru.maslov.boot.spring_boot_app.model.User;
 
 import javax.transaction.Transactional;
@@ -29,14 +30,7 @@ public class UserServiceIml implements UserService, UserDetailsService {
 
     @Override
     public void addUser(User user) {
-        if(user.getAdmin())
-        {
-        user.takeRole(roleDAO.getUserById(1L));
-        }
-        if(user.getUser()){
-            user.takeRole(roleDAO.getUserById(2L));
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         usersDAO.addUser(user);
     }
 
@@ -47,26 +41,11 @@ public class UserServiceIml implements UserService, UserDetailsService {
         userToBeUpdated.setSurName(updatedUser.getSurName());
         userToBeUpdated.setUsername(updatedUser.getUsername());
         userToBeUpdated.setAge(updatedUser.getAge());
-        userToBeUpdated.setAdmin(updatedUser.getAdmin());
-        userToBeUpdated.setUser(updatedUser.getUser());
-        if(updatedUser.getPassword().equals(userToBeUpdated.getPassword())){
-            userToBeUpdated.setPassword(userToBeUpdated.getPassword());
-        } else {
-            userToBeUpdated.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        }
-        if(userToBeUpdated.getAdmin())
-        {
-            userToBeUpdated.takeRole(roleDAO.getUserById(1L));
-        } else {
-            userToBeUpdated.getRoles().remove(roleDAO.getUserById(1L));
-        }
-        if(userToBeUpdated.getUser()){
-            userToBeUpdated.takeRole(roleDAO.getUserById(2L));
-        } else {
-            userToBeUpdated.getRoles().remove(roleDAO.getUserById(2L));
+
+        userToBeUpdated.getRoles().remove(roleDAO.getRoleById(2L));
         }
 
-    }
+
 
     @Override
     public void removeUser(int id) {
@@ -86,6 +65,16 @@ public class UserServiceIml implements UserService, UserDetailsService {
     @Override
     public List<User> listOfUser() {
         return usersDAO.listOfUser();
+    }
+
+    @Override
+    public List<Role> getAllRoles() {
+        return roleDAO.getAllRoles();
+    }
+
+    @Override
+    public Role getRoleById(long id) {
+        return roleDAO.getRoleById(id);
     }
 
     @Override
