@@ -1,5 +1,6 @@
 package ru.maslov.boot.spring_boot_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "role_id")
     private Long id;
     private String role;
-
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles",cascade = CascadeType.PERSIST)
     private Set<User> userSet = new HashSet<>();
 
@@ -51,7 +52,7 @@ public class Role implements GrantedAuthority {
 
     public Role() {
     }
-
+    @JsonIgnore
     @Override
     public String getAuthority() {
         return role;

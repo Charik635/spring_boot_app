@@ -1,5 +1,6 @@
 package ru.maslov.boot.spring_boot_app.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -34,7 +35,7 @@ public class User implements UserDetails {
 
     @Column(name = "username")
     private String username;
-
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

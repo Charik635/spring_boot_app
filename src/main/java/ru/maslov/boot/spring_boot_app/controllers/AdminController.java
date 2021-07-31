@@ -37,7 +37,7 @@ public class AdminController {
         return "all-users";
     }
 
-    @PostMapping(value = "saveUser")
+    /*@PostMapping(value = "saveUser")
     public String saveUser(@ModelAttribute("newUser") User user, @RequestParam(value = "role", required = false) String[] role) {
         Set<Role> roleSet = new HashSet<>();
         for (String roles : role) {
@@ -83,6 +83,6 @@ public class AdminController {
     public String deleteUser(@PathVariable("id") int id) {
         userService.removeUser(id);
         return "redirect:/admin/userList";
-    }
+    }*/
 
 }

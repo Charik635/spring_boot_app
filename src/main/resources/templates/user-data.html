@@ -12,8 +12,8 @@
 <body>
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid"></div>
-    <div class="navbar-header" th:each="role:${userInfo.getRoles()}">
-        <p th:text="${userInfo.username} + ' with roles: ' + ${#strings.replace((role.getRole()), 'ROLE_', '')}"
+    <div class="navbar-header">
+        <p th:text="${userInfo.username} + ' with roles: ' + ${#strings.replace((userInfo.roles), 'ROLE_', '')}"
            class="navbar-brand p-2"></p>
     </div>
     <div class="navbar-footer">
@@ -57,8 +57,7 @@
                             <td th:text="${userInfo.surName}"></td>
                             <td th:text="${userInfo.age}"></td>
                             <td th:text="${userInfo.username}"></td>
-                            <td th:each="role : ${userInfo.roles}"
-                                th:text="${#strings.replace((role.getRole()), 'ROLE_', ' ')}"></td>
+                            <td th:text="${userInfo.roles}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -75,4 +74,3 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
-
