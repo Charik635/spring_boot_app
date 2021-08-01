@@ -274,7 +274,7 @@ function editUser() {
         }
     }
     let passwordEdit = window.formEditUser.editPassword,
-        nameEdit = window.formEditUser.nameEdit,
+        nameEdit = window.formEditUser.editName,
         editsurName = window.formEditUser.editsurName,
         ageEdit = window.formEditUser.editAge,
         editUsername = window.formEditUser.editUsername;
@@ -287,7 +287,6 @@ function editUser() {
         method: 'PUT',
         body: JSON.stringify({
             id: id,
-
             password: passwordEdit.value,
             name: nameEdit.value,
             surName: editsurName.value,

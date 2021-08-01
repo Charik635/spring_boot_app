@@ -12,7 +12,9 @@ import ru.maslov.boot.spring_boot_app.model.Role;
 import ru.maslov.boot.spring_boot_app.model.User;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 
@@ -30,13 +32,32 @@ public class UserServiceIml implements UserService, UserDetailsService {
 
     @Override
     public void addUser(User user) {
-
+        Set<Role> roles = new HashSet<>();
+        for (Role role :user.getRoles()) {
+            if(role.getRole().contains("ROLE_ADMIN")) {
+                roles.add(roleDAO.getRoleById(1L));
+            }
+            if(role.getRole().contains("ROLE_USER")) {
+                roles.add(roleDAO.getRoleById(2L));
+            }
+        }
+        user.setRoles(roles);
         usersDAO.addUser(user);
     }
 
     @Override
     public void updateUser(int id, User updatedUser) {
         User userToBeUpdated = usersDAO.getUserById(id);
+        Set<Role> roles = new HashSet<>();
+        for (Role role :updatedUser.getRoles()) {
+            if(role.getRole().contains("ROLE_ADMIN")) {
+                roles.add(roleDAO.getRoleById(1L));
+            }
+            if(role.getRole().contains("ROLE_USER")) {
+                roles.add(roleDAO.getRoleById(2L));
+            }
+        }
+        userToBeUpdated.setRoles(roles);
         userToBeUpdated.setName(updatedUser.getName());
         userToBeUpdated.setSurName(updatedUser.getSurName());
         userToBeUpdated.setUsername(updatedUser.getUsername());

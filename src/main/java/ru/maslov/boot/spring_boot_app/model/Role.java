@@ -10,6 +10,7 @@ import java.util.Set;
 // Этот класс реализует интерфейс GrantedAuthority, в котором необходимо переопределить только один метод getAuthority() (возвращает имя роли).
 // Имя роли должно соответствовать шаблону: «ROLE_ИМЯ», например, ROLE_USER.
 @Entity
+
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
@@ -41,6 +42,14 @@ public class Role implements GrantedAuthority {
         this.id = id;
         this.role = role;
     }
+    public Role(String roleName) {
+        if (roleName.contains("ROLE_ADMIN")) {
+            this.id = 1L;
+        } else if (roleName.contains("ROLE_USER")) {
+            this.id = 2L;
+        }
+        this.role = roleName;
+    }
 
     public Set<User> getUserSet() {
         return userSet;
@@ -56,5 +65,10 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return role;
+    }
+
+    @Override
+    public String toString() {
+        return this.role;
     }
 }

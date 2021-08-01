@@ -12,7 +12,7 @@ import ru.maslov.boot.spring_boot_app.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class RESTAdminController {
     @Autowired
     private UserService userService;
@@ -28,19 +28,20 @@ public class RESTAdminController {
         return new ResponseEntity<>(userList, HttpStatus.OK);
 
     }
-    @PostMapping("/users")
+    @PostMapping("/newUser")
     public ResponseEntity<User> addUser(@RequestBody User user){
         user.setPassword(passwordEncoder().encode(user.getPassword()));
         userService.addUser(user);
         return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
     @PutMapping("/users")
-    public ResponseEntity<User> update(@RequestBody User user) {
+    public ResponseEntity<?> update(@RequestBody User user) {
+
         if(user.getPassword().length() !=60){
             user.setPassword(passwordEncoder().encode(user.getPassword()));
         }
-        userService.addUser(user);
-        return new ResponseEntity<>(user,HttpStatus.OK);
+        userService.updateUser(user.getId(),user);
+        return  ResponseEntity.ok().body(user);
     }
     @DeleteMapping("/users/{id}")
     public ResponseEntity<User> delete(@PathVariable ("id") Integer id){
