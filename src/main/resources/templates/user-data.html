@@ -57,7 +57,8 @@
                             <td th:text="${userInfo.surName}"></td>
                             <td th:text="${userInfo.age}"></td>
                             <td th:text="${userInfo.username}"></td>
-                            <td th:text="${userInfo.roles}"></td>
+                            <td th:each="role : ${userInfo.roles}"
+                                th:text="${role.getRole()}"></td>
                         </tr>
                         </tbody>
                     </table>

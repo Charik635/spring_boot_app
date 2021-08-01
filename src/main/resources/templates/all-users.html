@@ -14,7 +14,7 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid"></div>
     <div class="navbar-header">
-        <p th:text="${userInfo.username} + ' with roles: ' + ${#strings.replace((userInfo.roles), 'ROLE_', '')}"
+        <p th:each="role:${userInfo.getRoles()}" th:text="${userInfo.username} + ' with roles: ' + ${role.getRole()}"
            class="navbar-brand p-2"></p>
     </div>
     <div class="navbar-footer">
