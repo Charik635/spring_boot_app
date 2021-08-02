@@ -35,13 +35,13 @@ public class RESTAdminController {
         return new ResponseEntity<>(user,HttpStatus.CREATED);
     }
     @PutMapping("/users")
-    public ResponseEntity<?> update(@RequestBody User user) {
+    public ResponseEntity<User> update(@RequestBody User user) {
 
         if(user.getPassword().length() !=60){
             user.setPassword(passwordEncoder().encode(user.getPassword()));
         }
         userService.updateUser(user.getId(),user);
-        return  ResponseEntity.ok().body(user);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
     @DeleteMapping("/users/{id}")
     public ResponseEntity<User> delete(@PathVariable ("id") Integer id){

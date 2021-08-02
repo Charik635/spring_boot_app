@@ -22,8 +22,7 @@ import java.util.Set;
 public class UserServiceIml implements UserService, UserDetailsService {
     private UserDAO usersDAO;
     private RoleDAO roleDAO;
-@Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+
 @Autowired
     public UserServiceIml(UserDAO usersDAO, RoleDAO roleDAO) {
         this.usersDAO = usersDAO;
@@ -63,7 +62,7 @@ public class UserServiceIml implements UserService, UserDetailsService {
         userToBeUpdated.setUsername(updatedUser.getUsername());
         userToBeUpdated.setAge(updatedUser.getAge());
 
-        userToBeUpdated.getRoles().remove(roleDAO.getRoleById(2L));
+
         }
 
 
